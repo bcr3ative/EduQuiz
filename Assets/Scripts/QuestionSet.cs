@@ -8,7 +8,11 @@ public class QuestionSet {
 
 	public QuestionSet() {}
 
-	public void addQuestion(string questionText, Question.QuestionType mode) {
-		questionList.Add(new Question(questionText, mode));
+	public void addQuestion(Question question) {
+		questionList.Add(question);
+	}
+
+	public List<Question> getQuestionList () {
+		return questionList;
 	}
 }

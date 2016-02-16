@@ -1,1 +1,2 @@
-hello there
+MODE2_V|tko?|ja|True|ti|False
+MODE4|sto?|a|False|b|True|c|False|d|False
