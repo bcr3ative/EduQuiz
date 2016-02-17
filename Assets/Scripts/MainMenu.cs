@@ -4,7 +4,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class MainMenu: MonoBehaviour {
-	
+
+	private QuestionSetManager questionSetManager;
 	// Use this for initialization
 	void Start () {
 	
@@ -16,7 +17,7 @@ public class MainMenu: MonoBehaviour {
 	}
 
 	public void startGame() {
-		SceneManager.LoadScene("start_game");
+		SceneManager.LoadScene("mode4");
 	}
 
 	public void addQuestions() {
