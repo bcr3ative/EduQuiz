@@ -45,12 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Answer.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
-     <Compile Include="Assets\Scripts\Question.cs" />
      <Compile Include="Assets\Scripts\QuestionScene.cs" />
-     <Compile Include="Assets\Scripts\QuestionSet.cs" />
-     <Compile Include="Assets\Scripts\QuestionSetManager.cs" />
+     <Compile Include="Assets\Utility\Answer.cs" />
+     <Compile Include="Assets\Utility\Question.cs" />
+     <Compile Include="Assets\Utility\QuestionSet.cs" />
+     <Compile Include="Assets\Utility\QuestionSetManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

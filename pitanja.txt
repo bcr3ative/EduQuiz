@@ -1,2 +1,5 @@
-MODE2_V|tko?|ja|True|ti|False
-MODE4|sto?|a|False|b|True|c|False|d|False
+MODE2_V|asd|asd|True|123|False
+MODE2_V|asdf|klafl|False|adsfkja|False
+MODE2_V|||False||False
+MODE2_V|||False||False
+MODE2_V|||False||False

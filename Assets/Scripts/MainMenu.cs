@@ -24,8 +24,8 @@ public class MainMenu: MonoBehaviour {
 	}
 
 	public void Questions() {
-		GameObject inputFieldGo = GameObject.Find("question_num_input");
-		InputField question_num_input = inputFieldGo.GetComponent<InputField>();
-		Application.LoadLevel("questions");
+		//GameObject inputFieldGo = GameObject.Find("question_num_input");
+		//InputField question_num_input = inputFieldGo.GetComponent<InputField>();
+		SceneManager.LoadScene("questions");
 	}
 }
