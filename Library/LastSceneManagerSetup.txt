@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/game_menu.unity
+- path: Assets/Scenes/question_modes/mode4.unity
   isLoaded: 1
   isActive: 1
