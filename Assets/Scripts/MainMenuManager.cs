@@ -22,6 +22,10 @@ public class MainMenuManager: MonoBehaviour {
 		SceneManager.LoadScene("add_questions");
 	}
 
+	public void help() {
+		SceneManager.LoadScene ("help");
+	}
+
 	public void settings() {
 		SceneManager.LoadScene ("settings");
 	}
