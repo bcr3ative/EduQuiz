@@ -15,6 +15,11 @@ public class SettingsManager : MonoBehaviour {
 		sound = GameObject.Find("sound_toggle").GetComponent<Toggle>();
 		font_size = GameObject.Find("fontsize_input").GetComponent<InputField>();
 		time = GameObject.Find("time_input").GetComponent<InputField>();
+		string[] line = readSettings ();
+		sound.isOn = bool.Parse (line[0]);
+		font_size.text = line [1];
+		time.text = line [2];
+				
 	}
 	
 	// Update is called once per frame
