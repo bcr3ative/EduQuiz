@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class QuestionScene : MonoBehaviour {
+public class AddQuestionsManager : MonoBehaviour {
 
 	private InputField inputQuestion;
 	private InputField inputField1;
