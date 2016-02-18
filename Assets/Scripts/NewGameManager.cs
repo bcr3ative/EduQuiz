@@ -48,7 +48,7 @@ public class NewGameManager : MonoBehaviour {
 	}
 
 	private Question getNextQuestion() {
-		if (hasNextQuestion) {
+		if (hasNextQuestion()) {
 			questionIndex++;
 			return questionSet.getQuestionList()[questionIndex];
 		}
