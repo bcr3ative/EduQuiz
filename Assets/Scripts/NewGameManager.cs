@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ public class NewGameManager : MonoBehaviour {
 	private Button answer2;
 	private Button answer3;
 	private Button answer4;
+	private Button hoveredButton;
 
 	private Text questionText;
 
@@ -17,8 +19,15 @@ public class NewGameManager : MonoBehaviour {
 
 	private int questionIndex;
 
+	private Image hoverImage;
+	private float timeSinceLastCall;
+	private bool hoverEngaged;
+	private bool buttonPressed;
+
 	// Use this for initialization
 	void Start () {
+
+		hoverImage = GameObject.Find("Image").GetComponent<Image>();
 
 		answer1 = GameObject.Find("answer1_button").GetComponent<Button>();
 		answer2 = GameObject.Find("answer2_button").GetComponent<Button>();
@@ -31,13 +40,31 @@ public class NewGameManager : MonoBehaviour {
 		questionSet = questionSetManager.importQuestions();
 
 		questionIndex = -1;
+		timeSinceLastCall = 0f;
+		hoverEngaged = false;
+		hoverImage.gameObject.SetActive(true);
+		hoverImage.fillAmount = 0f;
+		hoveredButton = null;
+		buttonPressed = false;
 
 		loadNewQuestion();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (hoverEngaged && !buttonPressed) {
+//			hoverImage.transform.position = Input.mousePosition;
+			timeSinceLastCall += Time.deltaTime;
+			if (timeSinceLastCall >= 0.04) {
+				if (hoverImage.fillAmount + 0.01f > 1) {
+					buttonPressed = true;
+					loadNewQuestion();
+					hoverImage.fillAmount = 0;
+				}
+				hoverImage.fillAmount += 0.01f;
+				timeSinceLastCall = 0;   // reset timer back to 0
+			}
+		}
 	}
 
 	private bool hasNextQuestion() {
@@ -60,6 +87,8 @@ public class NewGameManager : MonoBehaviour {
 
 		Question question = getNextQuestion();
 		if (question == null) return;
+
+		buttonPressed = false;
 
 		List<Answer> answers = question.getAnswers();
 
@@ -136,5 +165,19 @@ public class NewGameManager : MonoBehaviour {
 			answer3.GetComponentInChildren<Text>().text = answers[2].getText();
 			answer4.GetComponentInChildren<Text>().text = answers[3].getText();
 		}
+	}
+
+	public void onButtonEnter() {
+		hoverEngaged = true;
+	}
+
+	public void onButtonExit() {
+		hoverEngaged = false;
+		timeSinceLastCall = 0;
+		hoverImage.fillAmount = 0;
+	}
+
+	public void updateHoveredButton(Button button) {
+		hoveredButton = button;
 	}
 }
