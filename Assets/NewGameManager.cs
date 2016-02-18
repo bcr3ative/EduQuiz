@@ -39,6 +39,7 @@ public class NewGameManager : MonoBehaviour {
 			if (mode == "MODE2_H") {
 				if (i == 1) {
 					answer1.GetComponentInChildren<Text> ().text = answer.getText ();
+
 				} else {
 					answer3.GetComponentInChildren<Text> ().text = answer.getText ();
 				}
@@ -50,10 +51,49 @@ public class NewGameManager : MonoBehaviour {
 			i++;
 		}
 
+		// button resizing and positioning based on the question mode
 		if (mode == "MODE2_V") {
+			// set size of first button
+			answer1.image.rectTransform.sizeDelta = new Vector2 (570, 500);
+			//set position of first button
+			Vector3 temp = answer1.transform.position;
+			temp.x = 250;
+			temp.y = 220;
+			temp.z = 0;
+			answer1.transform.position = temp;
+
+			// set size of second button
+			answer2.image.rectTransform.sizeDelta = new Vector2 (570, 500);
+			// set position of second button
+			temp = answer2.transform.position;
+			temp.x = 820;
+			temp.y = 220;
+			temp.z = 0;
+			answer2.transform.position = temp;
+
+			// hide third and fourth button 
 			answer3.gameObject.SetActive (false);
 			answer4.gameObject.SetActive (false);
 		} else if (mode == "MODE2_H") {
+			// set size of first button
+			answer1.image.rectTransform.sizeDelta = new Vector2 (980, 250);
+			//set position of first button
+			Vector3 temp = answer1.transform.position;
+			temp.x = 500;
+			temp.y = 350;
+			temp.z = 0;
+			answer1.transform.position = temp;
+
+			// set size of third button
+			answer3.image.rectTransform.sizeDelta = new Vector2 (980, 250);
+			// set position of second button
+			temp = answer2.transform.position;
+			temp.x = 500;
+			temp.y = 100;
+			temp.z = 0;
+			answer3.transform.position = temp;
+
+			// hide second and fourth button 
 			answer2.gameObject.SetActive (false);
 			answer4.gameObject.SetActive (false);
 		}
