@@ -1,58 +1,73 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class NewGameManager : MonoBehaviour {
 
-	private Button answ;
 	private Button answer1;
 	private Button answer2;
 	private Button answer3;
 	private Button answer4;
+
 	private Text questionText;
 
-	QuestionSetManager questionSetManager;
+	private QuestionSetManager questionSetManager;
+	private QuestionSet questionSet;
+
+	private int questionIndex;
+
 	// Use this for initialization
 	void Start () {
+
+		answer1 = GameObject.Find("answer1_button").GetComponent<Button>();
+		answer2 = GameObject.Find("answer2_button").GetComponent<Button>();
+		answer3 = GameObject.Find("answer3_button").GetComponent<Button>();
+		answer4 = GameObject.Find("answer4_button").GetComponent<Button>();
+
+		questionText = GameObject.Find("question_text").GetComponent<Text>();
+
 		questionSetManager = new QuestionSetManager ();
+		questionSet = questionSetManager.importQuestions();
 
-		questionText = GameObject.Find ("question_text").GetComponent<Text> ();
-		answer1 = GameObject.Find ("answer1_button").GetComponent<Button> ();
-		answer2 = GameObject.Find ("answer2_button").GetComponent<Button> ();
-		answer3 = GameObject.Find ("answer3_button").GetComponent<Button> ();
-		answer4 = GameObject.Find ("answer4_button").GetComponent<Button> ();
+		questionIndex = -1;
 
-		string mode = "";
-		string question_text = "";
+		loadNewQuestion();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
 
-		List<Question> questionList = questionSetManager.importQuestions ().getQuestionList ();
-		Question firstQuestion = questionList [0];
-		List<Answer> answerList = firstQuestion.getAnswers ();
-		mode = firstQuestion.getQuestionMode ().ToString();
-		question_text = firstQuestion.getQuestionText ();
+	private bool hasNextQuestion() {
+		if (questionIndex + 1 <= questionSet.getQuestionList().Count - 1) {
+			return true;
+		}
+		return false;
+	}
 
-		questionText.text = question_text;
-
-		int i = 1;
-		foreach (Answer answer in answerList) {
-			if (mode == "MODE2_H") {
-				if (i == 1) {
-					answer1.GetComponentInChildren<Text> ().text = answer.getText ();
-
-				} else {
-					answer3.GetComponentInChildren<Text> ().text = answer.getText ();
-				}
-			} else {
-				string name = "answer" + i.ToString () + "_button"; 
-				answ = GameObject.Find (name).GetComponent<Button> ();
-				answ.GetComponentInChildren<Text>().text = answer.getText ();
-			}
-			i++;
+	private Question getNextQuestion() {
+		if (hasNextQuestion) {
+			questionIndex++;
+			return questionSet.getQuestionList()[questionIndex];
 		}
 
+		return null;
+	}
+
+	public void loadNewQuestion() {
+
+		Question question = getNextQuestion();
+		if (question == null) return;
+
+		List<Answer> answers = question.getAnswers();
+
+		Question.QuestionType mode = question.getQuestionMode();
+		questionText.text = question.getQuestionText();
+
 		// button resizing and positioning based on the question mode
-		if (mode == "MODE2_V") {
+		if (mode == Question.QuestionType.MODE2_V) {
 			// set size of first button
 			answer1.image.rectTransform.sizeDelta = new Vector2 (478, 350);
 			//set position of first button
@@ -74,7 +89,11 @@ public class NewGameManager : MonoBehaviour {
 			// hide third and fourth button 
 			answer3.gameObject.SetActive (false);
 			answer4.gameObject.SetActive (false);
-		} else if (mode == "MODE2_H") {
+
+			// set answers text
+			answer1.GetComponentInChildren<Text>().text = answers[0].getText();
+			answer2.GetComponentInChildren<Text>().text = answers[1].getText();
+		} else if (mode == Question.QuestionType.MODE2_H) {
 			// set size of first button
 			answer1.image.rectTransform.sizeDelta = new Vector2 (956, 175);
 			//set position of first button
@@ -96,12 +115,17 @@ public class NewGameManager : MonoBehaviour {
 			// hide second and fourth button 
 			answer2.gameObject.SetActive (false);
 			answer4.gameObject.SetActive (false);
-		}
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+			// set answers text
+			answer1.GetComponentInChildren<Text>().text = answers[0].getText();
+			answer3.GetComponentInChildren<Text>().text = answers[1].getText();
+		} else if (mode == Question.QuestionType.MODE4) {
+
+			// set answers text
+			answer1.GetComponentInChildren<Text>().text = answers[0].getText();
+			answer2.GetComponentInChildren<Text>().text = answers[1].getText();
+			answer3.GetComponentInChildren<Text>().text = answers[2].getText();
+			answer4.GetComponentInChildren<Text>().text = answers[3].getText();
+		}
 	}
 }
