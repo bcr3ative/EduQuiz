@@ -54,7 +54,7 @@ public class NewGameManager : MonoBehaviour {
 		// button resizing and positioning based on the question mode
 		if (mode == "MODE2_V") {
 			// set size of first button
-			answer1.image.rectTransform.sizeDelta = new Vector2 (570, 500);
+			answer1.image.rectTransform.sizeDelta = new Vector2 (478, 350);
 			//set position of first button
 			Vector3 temp = answer1.transform.position;
 			temp.x = 250;
@@ -63,7 +63,7 @@ public class NewGameManager : MonoBehaviour {
 			answer1.transform.position = temp;
 
 			// set size of second button
-			answer2.image.rectTransform.sizeDelta = new Vector2 (570, 500);
+			answer2.image.rectTransform.sizeDelta = new Vector2 (478, 350);
 			// set position of second button
 			temp = answer2.transform.position;
 			temp.x = 820;
@@ -76,7 +76,7 @@ public class NewGameManager : MonoBehaviour {
 			answer4.gameObject.SetActive (false);
 		} else if (mode == "MODE2_H") {
 			// set size of first button
-			answer1.image.rectTransform.sizeDelta = new Vector2 (980, 250);
+			answer1.image.rectTransform.sizeDelta = new Vector2 (956, 175);
 			//set position of first button
 			Vector3 temp = answer1.transform.position;
 			temp.x = 500;
@@ -85,7 +85,7 @@ public class NewGameManager : MonoBehaviour {
 			answer1.transform.position = temp;
 
 			// set size of third button
-			answer3.image.rectTransform.sizeDelta = new Vector2 (980, 250);
+			answer3.image.rectTransform.sizeDelta = new Vector2 (956, 175);
 			// set position of second button
 			temp = answer2.transform.position;
 			temp.x = 500;
