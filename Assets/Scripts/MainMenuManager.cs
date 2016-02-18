@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEngine.UI;
 
 public class MainMenuManager: MonoBehaviour {
 
@@ -21,5 +20,9 @@ public class MainMenuManager: MonoBehaviour {
 
 	public void addQuestions() {
 		SceneManager.LoadScene("add_questions");
+	}
+
+	public void settings() {
+		SceneManager.LoadScene ("settings");
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class AddQuestionsManager : MonoBehaviour {
 
@@ -102,5 +103,6 @@ public class AddQuestionsManager : MonoBehaviour {
 
 	public void onQuestionsEntryFinished() {
 		questionSetManager.exportQuestions(questionSet);
+		SceneManager.LoadScene("game_menu");
 	}
 }

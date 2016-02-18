@@ -14,6 +14,7 @@ public class NewGameManager : MonoBehaviour {
 
 	private QuestionSetManager questionSetManager;
 	private QuestionSet questionSet;
+	private SettingsManager settingsManager;
 
 	private int questionIndex;
 
@@ -26,6 +27,20 @@ public class NewGameManager : MonoBehaviour {
 		answer4 = GameObject.Find("answer4_button").GetComponent<Button>();
 
 		questionText = GameObject.Find("question_text").GetComponent<Text>();
+
+		// read settings from file
+		settingsManager = new SettingsManager();
+		string sound = settingsManager.readSettings () [0];
+		int font_size = int.Parse (settingsManager.readSettings () [1]);
+		int time_elapsed = int.Parse (settingsManager.readSettings () [2]);
+
+
+		// set font size
+		answer1.GetComponentInChildren<Text> ().fontSize = font_size;
+		answer2.GetComponentInChildren<Text> ().fontSize = font_size;
+		answer3.GetComponentInChildren<Text> ().fontSize = font_size;
+		answer4.GetComponentInChildren<Text> ().fontSize = font_size;
+		questionText.GetComponentInChildren<Text> ().fontSize = font_size;
 
 		questionSetManager = new QuestionSetManager ();
 		questionSet = questionSetManager.importQuestions();
