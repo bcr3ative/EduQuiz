@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class AddQuestionsManager : MonoBehaviour {
 
@@ -78,22 +80,55 @@ public class AddQuestionsManager : MonoBehaviour {
 	public void onQuestionSave() {
 		Question question = new Question(inputQuestion.text, mode);
 
+		if (inputQuestion.text == "") {
+			EditorUtility.DisplayDialog ("Upozorenje", "Niste unijeli tekst pitanja.", "U redu");
+			return;
+		}
+
 		switch(mode) {
 			case Question.QuestionType.MODE2_V:
+				if (inputField1.text == "" || inputField2.text == "") {
+					EditorUtility.DisplayDialog ("Upozorenje", "Niste unijeli odgovore.", "U redu");
+					return;
+				}
+				if (!(toggle1.isOn || toggle2.isOn)) {
+					EditorUtility.DisplayDialog ("Upozorenje", "Niste označili niti jedan odgovor kao točan odgovor.", "U redu");
+					return;
+				}
 				question.addAnswer(inputField1.text, toggle1.isOn);
 				question.addAnswer(inputField2.text, toggle2.isOn);
 				break;
 			case Question.QuestionType.MODE2_H:
+				if (inputField1.text == "" || inputField3.text == "") {
+					EditorUtility.DisplayDialog ("Upozorenje", "Niste unijeli odgovore.", "U redu");
+					return;
+				}
+				if (!(toggle1.isOn || toggle3.isOn)) {
+					EditorUtility.DisplayDialog ("Upozorenje", "Niste označili niti jedan odgovor kao točan odgovor.", "U redu");
+					return;
+				}
 				question.addAnswer(inputField1.text, toggle1.isOn);
 				question.addAnswer(inputField3.text, toggle3.isOn);
 				break;
 			case Question.QuestionType.MODE4:
+				if (inputField1.text == "" || inputField2.text == "" || inputField3.text == "" || inputField4.text == "") {
+					EditorUtility.DisplayDialog ("Upozorenje", "Niste unijeli odgovore.", "U redu");
+					return;
+				}
+				if (!(toggle1.isOn || toggle2.isOn || toggle3.isOn || toggle4.isOn)) {
+					EditorUtility.DisplayDialog ("Upozorenje", "Niste označili niti jedan odgovor kao točan odgovor.", "U redu");
+					return;
+				}
 				question.addAnswer(inputField1.text, toggle1.isOn);
 				question.addAnswer(inputField2.text, toggle2.isOn);
 				question.addAnswer(inputField3.text, toggle3.isOn);
 				question.addAnswer(inputField4.text, toggle4.isOn);
 				break;
+			default:
+				EditorUtility.DisplayDialog ("Upozorenje", "Niste odabrali modalitet igre.", "U redu");
+				return;
 		}
+
 
 		questionSet.addQuestion(question);
 		inputQuestion.text = inputField1.text = inputField2.text = inputField3.text = inputField4.text = "";
@@ -102,5 +137,10 @@ public class AddQuestionsManager : MonoBehaviour {
 
 	public void onQuestionsEntryFinished() {
 		questionSetManager.exportQuestions(questionSet);
+		SceneManager.LoadScene("game_menu");
+	}
+
+	public void goBack() {
+		SceneManager.LoadScene("game_menu");
 	}
 }
