@@ -18,9 +18,9 @@ public class NewGameManager : MonoBehaviour {
 
 	private QuestionSetManager questionSetManager;
 	private QuestionSet questionSet;
-	private SettingsManager settingsManager;
 
 	private int questionIndex;
+	private int timeDelay;
 
 	private Image hoverImage;
 	private float timeSinceLastCall;
@@ -42,11 +42,10 @@ public class NewGameManager : MonoBehaviour {
 		questionText = GameObject.Find("question_text").GetComponent<Text>();
 
 		// read settings from file
-		settingsManager = new SettingsManager();
-		string sound = settingsManager.readSettings () [0];
-		int font_size = int.Parse (settingsManager.readSettings () [1]);
-		int time_elapsed = int.Parse (settingsManager.readSettings () [2]);
-
+		string[] preferences = PreferencesManager.read();
+		string sound = preferences[0];
+		int font_size = int.Parse (preferences[1]);
+		timeDelay = int.Parse (preferences[2]);
 
 		// set font size
 		answer1.GetComponentInChildren<Text> ().fontSize = font_size;
@@ -74,7 +73,7 @@ public class NewGameManager : MonoBehaviour {
 		if (hoverEngaged && !buttonPressed) {
 //			hoverImage.transform.position = Input.mousePosition;
 			timeSinceLastCall += Time.deltaTime;
-			if (timeSinceLastCall >= 0.04) {
+			if (timeSinceLastCall >= getDelayFraction(timeDelay)) {
 				if (hoverImage.fillAmount + 0.01f > 1) {
 					if (string.Compare(hoveredButton.GetComponentInChildren<Text>().text, correctAnswer) == 0) {
 						EditorUtility.DisplayDialog("Informacija", "Tocan odgovor", "Nastavi");
@@ -90,6 +89,15 @@ public class NewGameManager : MonoBehaviour {
 				timeSinceLastCall = 0;   // reset timer back to 0
 			}
 		}
+	}
+
+	private double getDelayFraction(int delay) {
+		int time = 1;
+		// cap at ~ 1 second
+		if (delay > 1) {
+			time = delay - 1;
+		}
+		return time/100.0;
 	}
 
 	private bool hasNextQuestion() {
