@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEditor;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -24,6 +26,8 @@ public class NewGameManager : MonoBehaviour {
 	private float timeSinceLastCall;
 	private bool hoverEngaged;
 	private bool buttonPressed;
+	private string correctAnswer;
+	ColorBlock cb;
 
 	// Use this for initialization
 	void Start () {
@@ -72,6 +76,12 @@ public class NewGameManager : MonoBehaviour {
 			timeSinceLastCall += Time.deltaTime;
 			if (timeSinceLastCall >= 0.04) {
 				if (hoverImage.fillAmount + 0.01f > 1) {
+					if (string.Compare(hoveredButton.GetComponentInChildren<Text>().text, correctAnswer) == 0) {
+						EditorUtility.DisplayDialog("Informacija", "Tocan odgovor", "Nastavi");
+					} else {
+						EditorUtility.DisplayDialog("Informacija", "Netocan odgovor", "Nastavi");
+					}
+
 					buttonPressed = true;
 					loadNewQuestion();
 					hoverImage.fillAmount = 0;
@@ -101,11 +111,21 @@ public class NewGameManager : MonoBehaviour {
 	public void loadNewQuestion() {
 
 		Question question = getNextQuestion();
-		if (question == null) return;
+		if (question == null) {
+			EditorUtility.DisplayDialog("Informacija", "Kraj igre", "Povratak u glavni izbornik");
+			SceneManager.LoadScene("game_menu");
+			return;
+		}
 
 		buttonPressed = false;
 
 		List<Answer> answers = question.getAnswers();
+
+		foreach (Answer answer in answers) {
+			if (answer.isCorrect()) {
+				correctAnswer = answer.getText();
+			}
+		}
 
 		Question.QuestionType mode = question.getQuestionMode();
 		questionText.text = question.getQuestionText();

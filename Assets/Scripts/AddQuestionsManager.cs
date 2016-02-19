@@ -17,10 +17,14 @@ public class AddQuestionsManager : MonoBehaviour {
 	private Toggle toggle3;
 	private Toggle toggle4;
 
+	private Text questionNumberText;
+
 	private QuestionSetManager questionSetManager;
 	private QuestionSet questionSet;
 
 	private Question.QuestionType mode;
+
+	private int questionNumber;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +39,10 @@ public class AddQuestionsManager : MonoBehaviour {
 		toggle2 = GameObject.Find("answer2_toggle").GetComponent<Toggle>();
 		toggle3 = GameObject.Find("answer3_toggle").GetComponent<Toggle>();
 		toggle4 = GameObject.Find("answer4_toggle").GetComponent<Toggle>();
+
+		questionNumberText = GameObject.Find("question_number").GetComponent<Text>();
+		questionNumber = 1;
+		questionNumberText.text = questionNumber.ToString();
 
 		questionSetManager = new QuestionSetManager();
 		questionSet = new QuestionSet();
@@ -131,6 +139,8 @@ public class AddQuestionsManager : MonoBehaviour {
 
 
 		questionSet.addQuestion(question);
+		questionNumber += 1;
+		questionNumberText.text = questionNumber.ToString();
 		inputQuestion.text = inputField1.text = inputField2.text = inputField3.text = inputField4.text = "";
 		toggle1.isOn = toggle2.isOn = toggle3.isOn = toggle4.isOn = false;
 	}
